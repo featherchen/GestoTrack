@@ -10,7 +10,7 @@ using namespace std;
 #define timer_read_us(x)    (x).elapsed_time().count()
 
 #define _updateSpeed 100ms
-#define _timeout 1s
+#define _timeout 100ms
 
 int counter = 0;
     
@@ -65,16 +65,7 @@ int counter = 0;
     }
     void ultrasonic::startUpdates(void)
     {
-        // while (true) {
-            _startTrig();
-        //     int s = timer_read_us(_t), e = timer_read_us(_t);
-        //     while (e - s < 1000000) {
-        //         e = timer_read_us(_t);
-        //     }
-        //     printf("done1%d\n", done);
-        //     checkDistance();
-        //     done = 0;
-        // }
+        _startTrig();
     }
     void ultrasonic::attachOnUpdate(void method(string, int, int, int))
     {
@@ -100,4 +91,8 @@ int counter = 0;
             //     printf("\n");
             // }
         }
+    }
+
+    void ultrasonic::reset() {
+        queue.reset();
     }

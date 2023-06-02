@@ -3,6 +3,7 @@
 
 #include "mbed.h"
 #include <array>
+#include <vector>
 #include <string>
 #include "gesture.h"
 #include "MyQueue.h"
@@ -34,10 +35,9 @@ class ultrasonic
             done = 0;
         }
 
-        std::array<int, sonicWindow> getChanges(){
-            assert(queue.ready());
-            std::array<int, sonicWindow> arr;
-            for(int i=0;i<sonicWindow;i++){
+        std::vector<int> getChanges(){
+            vector<int> arr(queue.size());
+            for(int i=0;i<queue.size();i++){
                 if(i==0 || queue[i]>limit){
                     arr[i] = 0;
                 } else if(arr[i-1]>=0 && queue[i-1]-queue[i] >= threshold){
@@ -50,6 +50,7 @@ class ultrasonic
             }
             return arr;
         }
+        void reset();
     private:
 
         DigitalOut _trig;

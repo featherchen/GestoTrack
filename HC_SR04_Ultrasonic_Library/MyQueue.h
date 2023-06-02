@@ -54,6 +54,10 @@ struct MyQueue {
             }
         }
     }
+
+    T last() {
+        return a[front + window - 1];
+    }
 };
 
 #endif // QUEUE_H
