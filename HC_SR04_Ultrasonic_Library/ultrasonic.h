@@ -36,20 +36,21 @@ class ultrasonic
         }
 
         std::vector<int> getChanges(){
-            vector<int> arr(queue.size());
-            for(int i=0;i<queue.size();i++){
-                if(i==0 || queue[i]>limit){
+            std::vector<int> arr(queue.size());
+            for(int i = 0; i < queue.size(); i++) {
+                if (i == 0 || queue[i] > limit){
                     arr[i] = 0;
-                } else if(arr[i-1]>=0 && queue[i-1]-queue[i] >= threshold){
+                } else if (arr[i - 1] >= 0 && queue[i - 1] - queue[i] >= threshold) {
                     arr[i] = -1;
-                } else if(arr[i-1]<=0 && queue[i]-queue[i-1] >= threshold){
+                } else if (arr[i - 1] <= 0 && queue[i] - queue[i - 1] >= threshold) {
                     arr[i] = 1;
-                } else{
+                } else {
                     arr[i] = 0;
                 }
             }
             return arr;
         }
+
         void reset();
     private:
 

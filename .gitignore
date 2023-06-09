@@ -1,7 +1,10 @@
 .build
+.DS_Store
 .mbed
 projectfiles
 *.py*
 mbed-os
 BUILD
 
+VL53L0X
+vl53l0x-mbed
