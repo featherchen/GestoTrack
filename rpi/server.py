@@ -16,42 +16,50 @@ PORT = 8080
 
 LIGHT_STATE = False
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, PORT))
-    s.listen()
-    conn, addr = s.accept()
-    with conn:
-        print('Connect by: ', addr)
-        try:
-            while True:
-                data = conn.recv(1024).decode('utf-8').strip()
-                if data:
-                    print('Receive: ', data)
-                    if data[0] == '0':
-                        GPIO.output(LEDPin, GPIO.LOW)
-                    elif data[0] == '1':
-                        GPIO.output(LEDPin, GPIO.HIGH)
-                    else:
-                        print("Unknown first bit: " + data[0])
-
-                    if len(data) > 1:
-                        if data[1] == '1':
-                            GPIO.output(BUZZPin, GPIO.HIGH)
-                            sleep(1)
-                            GPIO.output(BUZZPin, GPIO.LOW)
-                        elif data[1] != '0':
-                            print("Unknown second bit: " + data)
-                        else:
-                            for i in range(10):
-                                GPIO.output(LEDPin, GPIO.HIGH)
-                                sleep(0.1)
-                                GPIO.output(LEDPin, GPIO.LOW)
-                                sleep(0.1)
-
-                    else:
-                        print("Missing second bit")
-        except KeyboardInterrupt:
-            GPIO.output(LEDPin, GPIO.LOW)
-            GPIO.output(BUZZPin, GPIO.LOW)
-            GPIO.cleanup()
-            conn.close()
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:                    
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)                     
+    s.bind((HOST, PORT))                                                        
+    s.listen()                                                                  
+    conn, addr = s.accept()                                                     
+    with conn:                                                                  
+        print('Connect by: ', addr)                                             
+        try:                                                                    
+            while True:                                                         
+                data = conn.recv(1024)                                          
+                print(data)                                                     
+                if len(data) == 0:                                              
+                    break                                                       
+                data = data.decode('utf-8').strip()                             
+                                                                                
+                if data:                                                        
+                    print('Receive: ', data)                                    
+                    if data[0] == '0':                                          
+                        GPIO.output(LEDPin, GPIO.LOW)                           
+                    elif data[0] == '1':                                        
+                        GPIO.output(LEDPin, GPIO.HIGH)                          
+                    else:                                                       
+                        print("Unknown first bit: " + data[0])                  
+                                                                                
+                    if len(data) > 1:                                           
+                        if data[1] == '1':                                      
+                            GPIO.output(BUZZPin, GPIO.HIGH)                     
+                            sleep(1)                                            
+                            GPIO.output(BUZZPin, GPIO.LOW)                      
+                        elif data[1] != '0':                                    
+                            print("Unknown second bit: " + data)                
+                        else:                                                   
+                            for i in range(10):                                 
+                                GPIO.output(LEDPin, GPIO.HIGH)                  
+                                sleep(0.1)                                      
+                                GPIO.output(LEDPin, GPIO.LOW)                   
+                                sleep(0.1)                                      
+                                                                                
+                    else:                                                       
+                        print("Missing second bit")                             
+                else:                                                           
+                    break                                                       
+        except KeyboardInterrupt:                                               
+            GPIO.output(LEDPin, GPIO.LOW)                                       
+            GPIO.output(BUZZPin, GPIO.LOW)                                      
+            GPIO.cleanup()                                                      
+            conn.close()                 
