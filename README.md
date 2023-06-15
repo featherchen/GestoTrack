@@ -1,17 +1,21 @@
 # GestoTrack [[Link]](https://github.com/featherchen/GestoTrack)
 
 ## Introduction
+
 GestoTrack is a gesture tracking system built on STM32 B-L475E-IOT01A2 with Mbed OS and HC-SR04 ultrasonic sensors.
 
 This is also a Final Project of Electrical Engineering Lab (embedded System), NTU, 2023Spring.
 
 ## Motivation
+
 Just like [MightyRC](https://mightyrc.com/), we want to create a system that can detect gestures and control related IoT devices.
+
 ## Architechture
 
-This Project is mainly composed of [STM32 B-L475E-IOT01A2](https://www.st.com/en/evaluation-tools/b-l475e-iot01a.html) (L475) and [Raspberry Pi](https://www.raspberrypi.com/) (Rpi). In order to get the gesture data, we connect the former with HC-SR04 distance sensor, see sensor section below. The latter is a powerful board that can help us to control those IoT devices. In the experiment, we take LED and buzzer as an example to show the concept of GestoTrack, i.e. proof of concept. Our solution can be easily applied to more complicated devices as long as they are compatible with Rpi interface.
+This Project is mainly composed of [STM32 B-L475E-IOT01A2](https://www.st.com/en/evaluation-tools/b-l475e-iot01a.html) (L475) and [Raspberry Pi](https://www.raspberrypi.com/) (RPi). In order to get the gesture data, we connect the former with HC-SR04 distance sensor, see sensor section below. The latter is a powerful board that can help us to control those IoT devices. In the experiment, we take LED and buzzer as an example to show the concept of GestoTrack, i.e. proof of concept. Our solution can be easily applied to more complicated devices as long as they are compatible with RPi interface.
 
-We choose WiFi as the bridge between L475 and Rpi. The first reason is that MightyRC uses WiFi. Second, WiFi has a longer connection distance and fewer security issues. Last but not least, the complexity of implementing Wifi communication between L475 and Rpi is much lower than Bluetooth, reducing the possibility of unexpected issues or bugs.
+We choose WiFi as the bridge between L475 and RPi. The first reason is that MightyRC uses WiFi. Second, WiFi has a longer connection distance and fewer security issues. Last but not least, the complexity of implementing Wifi communication between L475 and RPi is much lower than Bluetooth, reducing the possibility of unexpected issues or bugs.
+
 ## Sensor
 
 The sensor works as follows:
@@ -24,9 +28,11 @@ The sensor works as follows:
 Due to the nature of time-of-flight based detection, multiple sensors are difficult to synchronize. 
 
 In particular, we used ISR and the TimeOut class to repeatedly execute the detecting function per $timeout$ seconds. This parameter needs to be fine-tuned. It can not be too long because:
+
 1. It might fail to detect the object if the object moves in the middle of *timeout*.
 
 It can not be too short because:
+
 1. It can not be shorter than the time needed to perform a full detection cycle. This time is dependent of the distance to the detected object because of the nature of time-of-flight detection.
 
 ## Detection Algorithm
@@ -47,6 +53,7 @@ Following guidelines determine the size of the array and the window width:
 2. The width essentially determines the complexity of gestures to detect.
 
 ### Gesture Recognition
+
 ![image](https://github.com/featherchen/GestoTrack/blob/main/resource/state%20diagram.png?raw=true)
 
 
@@ -62,17 +69,22 @@ Take state21 as an example, if it goes to state0 due to timeout, the gesture sho
 The value of *timeout* is a parameter that should be set properly, in our prototype *timeout* is 1 second for each state except state3. Since state3 is the final state, *timeout* can be smaller, e.g. 0.2 seconds.
 
 ## Connect to RPi via WiFi
-Create a socket server at Rpi, whenever L475 recognizes a gesture, it sends an encoded message to the server. Rpi controls the device (e.g. make the LED blink, let the buzzer sound) based on the received message.
+
+Create a socket server at RPi, whenever L475 recognizes a gesture, it sends an encoded message to the server. RPi controls the device (e.g. make the LED blink, let the buzzer sound) based on the received message.
+
 ## Demo Video
+
 https://youtu.be/BlcjqGm-lUg 
 
 ## Slides
+
 * [Proposal](https://github.com/featherchen/GestoTrack/blob/main/resource/Proposal.pdf)
 * [Progress Report](https://github.com/featherchen/GestoTrack/blob/main/resource/Progress%20Report.pdf)
 * [Final Presentation](https://github.com/featherchen/GestoTrack/blob/main/resource/Final%20Presentation.pdf)
+
 ## Reference
 
-* [How HC-SR04 Ultrasonic Sensor Works & Interface It With Arduino](https://lastminuteengineers.com/arduino-sr04-ultrasonic-sensor-tutorial/)  
-* [HC_SR04_Ultrasonic_Library](https://os.mbed.com/users/ejteb/code/HC_SR04_Ultrasonic_Library/#e0f9c9fb4cf3d5b7213e38d0aa18bda0abcfaa32)  
-* [HC-SR04 manual](https://web.eece.maine.edu/~zhu/book/lab/HC-SR04%20User%20Manual.pdf)  
-* [Bluetooth v.s. WiFi](https://www.mokoblue.com/zh-tw/bluetooth-vs-wifi-which-is-better/)
+* [How HC-SR04 Ultrasonic Sensor Works & Interface It With Arduino](https://lastminuteengineers.com/arduino-sr04-ultrasonic-sensor-tutorial/)
+* [HC_SR04_Ultrasonic_Library](https://os.mbed.com/users/ejteb/code/HC_SR04_Ultrasonic_Library/#e0f9c9fb4cf3d5b7213e38d0aa18bda0abcfaa32)
+* [HC-SR04 manual](https://web.eece.maine.edu/~zhu/book/lab/HC-SR04%20User%20Manual.pdf)
+  *[Bluetooth v.s. WiFi](https://www.mokoblue.com/zh-tw/bluetooth-vs-wifi-which-is-better/)
