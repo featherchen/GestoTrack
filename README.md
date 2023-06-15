@@ -72,7 +72,7 @@ https://youtu.be/BlcjqGm-lUg
 * [Final Presentation](https://github.com/featherchen/GestoTrack/blob/main/resource/Final%20Presentation.pdf)
 ## Reference
 
-[How HC-SR04 Ultrasonic Sensor Works & Interface It With Arduino](https://lastminuteengineers.com/arduino-sr04-ultrasonic-sensor-tutorial/)
-[HC_SR04_Ultrasonic_Library](https://os.mbed.com/users/ejteb/code/HC_SR04_Ultrasonic_Library/#e0f9c9fb4cf3d5b7213e38d0aa18bda0abcfaa32)
-[HC-SR04 manual](https://web.eece.maine.edu/~zhu/book/lab/HC-SR04%20User%20Manual.pdf)
+[How HC-SR04 Ultrasonic Sensor Works & Interface It With Arduino](https://lastminuteengineers.com/arduino-sr04-ultrasonic-sensor-tutorial/)  
+[HC_SR04_Ultrasonic_Library](https://os.mbed.com/users/ejteb/code/HC_SR04_Ultrasonic_Library/#e0f9c9fb4cf3d5b7213e38d0aa18bda0abcfaa32)  
+[HC-SR04 manual](https://web.eece.maine.edu/~zhu/book/lab/HC-SR04%20User%20Manual.pdf)  
 [Bluetooth v.s. WiFi](https://www.mokoblue.com/zh-tw/bluetooth-vs-wifi-which-is-better/)
