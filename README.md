@@ -1,11 +1,4 @@
----
-tags: eslab
----
-
 # GestoTrack [[Link]](https://github.com/featherchen/GestoTrack)
-
-<div style="text-align: right"> 陳亮君 曾憲揚 徐楷程
- </div> 
 
 ## Introduction
 GestoTrack is a gesture tracking system built on STM32 B-L475E-IOT01A2 with Mbed OS and HC-SR04 ultrasonic sensors.
